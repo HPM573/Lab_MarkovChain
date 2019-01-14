@@ -1,1 +1,1 @@
-# Lab_MarkovModel
+# Lab: Markov Model (Discrete-Time)
