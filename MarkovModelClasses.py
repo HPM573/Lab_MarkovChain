@@ -2,6 +2,7 @@ from enum import Enum
 import SimPy.RandomVariantGenerators as RVGCls
 import SimPy.SamplePathClasses as PathCls
 
+
 class HealthState(Enum):
     """ health states of patients with HIV """
     CD4_200to500 = 0
@@ -160,11 +161,10 @@ class CohortOutcomes:
         self.meanTimeToAIDS = sum(self.timesToAIDS)/len(self.timesToAIDS)
 
         # survival curve
-        self.nLivingPatients = PathCls.SamplePathBatchUpdate(
+        self.nLivingPatients = PathCls.PrevalencePathBatchUpdate(
             name='# of living patients',
             initial_size=simulated_cohort.initialPopSize,
+            times_of_changes=self.survivalTimes,
+            increments=[-1]*len(self.survivalTimes),
             sim_rep=simulated_cohort.id
         )
-        # record the times of death
-        for obs in self.survivalTimes:
-            self.nLivingPatients.record(time=obs, increment=-1)

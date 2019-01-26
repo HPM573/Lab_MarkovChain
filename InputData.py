@@ -10,7 +10,25 @@ TRANS_MATRIX = [
     [0,     0,      1312,   437]   # AIDS
     ]
 
-TRANS_PROB_MATRIX = [
-    [0.7215, 0.2018, 0.0669, 0.0098],   # CD4_200to500
-    [0.0000, 0.5811, 0.4070, 0.0119],   # CD4_200
-    [0.0000, 0.0000, 0.7501, 0.2499]]   # AIDS
+
+def get_trans_prob_matrix(trans_matrix):
+    """
+    :param trans_matrix: transition matrix containing counts of transitions between states
+    :return: transition probability matrix
+    """
+
+    # initialize transition probability matrix
+    trans_prob_matrix = []
+
+    # for each row in the transition matrix
+    for row in trans_matrix:
+        # calculate the transition probabilities
+        sum_row = sum(row)  # sum of counts in this row
+        prob_row = []
+        for cell in row:
+            prob_row.append(cell/sum_row)
+
+        # add this row of transition probabilities to the transition probability matrix
+        trans_prob_matrix.append(prob_row)
+
+    return trans_prob_matrix
