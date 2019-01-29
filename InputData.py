@@ -1,3 +1,4 @@
+import numpy as np
 
 # simulation settings
 POP_SIZE = 5000         # cohort population size
@@ -23,11 +24,7 @@ def get_trans_prob_matrix(trans_matrix):
     # for each row in the transition matrix
     for row in trans_matrix:
         # calculate the transition probabilities
-        sum_row = sum(row)  # sum of counts in this row
-        prob_row = []
-        for cell in row:
-            prob_row.append(cell/sum_row)
-
+        prob_row = np.array(row)/sum(row)
         # add this row of transition probabilities to the transition probability matrix
         trans_prob_matrix.append(prob_row)
 

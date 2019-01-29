@@ -1,5 +1,5 @@
 from enum import Enum
-import SimPy.RandomVariantGenerators as RVGCls
+import SimPy.RandomVariantGenerators as RVGs
 import SimPy.SamplePathClasses as PathCls
 
 
@@ -18,7 +18,7 @@ class Patient:
         :param transition_matrix: transition probability matrix
         """
         self.id = id
-        self.rng = RVGCls.RNG(seed=id)  # random number generator for this patient
+        self.rng = RVGs.RNG(seed=id)  # random number generator for this patient
         self.tranProbMatrix = transition_matrix  # transition probability matrix
         self.stateMonitor = PatientStateMonitor()  # patient state monitor
 
@@ -34,7 +34,7 @@ class Patient:
             trans_probs = self.tranProbMatrix[self.stateMonitor.currentState.value]
 
             # create an empirical distribution
-            empirical_dist = RVGCls.Empirical(probabilities=trans_probs)
+            empirical_dist = RVGs.Empirical(probabilities=trans_probs)
 
             # sample from the empirical distribution to get a new state
             # (returns an integer from {0, 1, 2, ...})
@@ -85,22 +85,6 @@ class PatientStateMonitor:
             return True
         else:
             return False
-
-    def get_survival_time(self):
-        """ returns the patient survival time """
-        # return survival time only if the patient has died
-        if not self.get_if_alive():
-            return self.survivalTime
-        else:
-            return None
-
-    def get_time_to_AIDS(self):
-        """ returns the patient's time to AIDS """
-        # return time to AIDS  only if the patient has developed AIDS
-        if self.ifDevelopedAIDS:
-            return self.timeToAIDS
-        else:
-            return None
 
 
 class Cohort:

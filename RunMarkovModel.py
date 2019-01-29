@@ -30,5 +30,5 @@ Fig.graph_histogram(
 print('Mean survival time (years):',
       myCohort.cohortOutcomes.meanSurvivalTime)
 # print mean time to AIDS
-print('Mean time until AIDS (years',
+print('Mean time until AIDS (years)',
       myCohort.cohortOutcomes.meanTimeToAIDS)
