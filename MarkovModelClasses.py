@@ -116,7 +116,7 @@ class Cohort:
             patient.simulate(n_time_steps)
 
         # store outputs of this simulation
-        self.cohortOutcomes.extract_outcomes(self)
+        self.cohortOutcomes.extract_outcomes(self.patients)
 
 
 class CohortOutcomes:
@@ -128,12 +128,12 @@ class CohortOutcomes:
         self.meanTimeToAIDS = None      # mean time to AIDS
         self.nLivingPatients = None     # survival curve (sample path of number of alive patients over time)
 
-    def extract_outcomes(self, simulated_cohort):
+    def extract_outcomes(self, simulated_patients):
         """ extracts outcomes of a simulated cohort
-        :param simulated_cohort: a cohort after being simulated"""
+        :param simulated_patients: a list of simulated patients"""
 
         # record survival time and time until AIDS
-        for patient in simulated_cohort.patients:
+        for patient in simulated_patients:
             if not (patient.stateMonitor.survivalTime is None):
                 self.survivalTimes.append(patient.stateMonitor.survivalTime)
             if patient.stateMonitor.ifDevelopedAIDS:
@@ -147,8 +147,7 @@ class CohortOutcomes:
         # survival curve
         self.nLivingPatients = PathCls.PrevalencePathBatchUpdate(
             name='# of living patients',
-            initial_size=simulated_cohort.initialPopSize,
+            initial_size=len(simulated_patients),
             times_of_changes=self.survivalTimes,
-            increments=[-1]*len(self.survivalTimes),
-            sim_rep=simulated_cohort.id
+            increments=[-1]*len(self.survivalTimes)
         )
