@@ -55,10 +55,6 @@ class PatientStateMonitor:
         :param new_state: new state
         """
 
-        # if the patient has died, do nothing
-        if self.currentState == HealthState.HIV_DEATH:
-            return
-
         # update survival time
         if new_state == HealthState.HIV_DEATH:
             self.survivalTime = time_step + 0.5  # corrected for the half-cycle effect
