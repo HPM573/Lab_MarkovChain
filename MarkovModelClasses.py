@@ -1,14 +1,6 @@
-from enum import Enum
+from InputData import HealthState
 import SimPy.RandomVariantGenerators as RVGs
 import SimPy.SamplePathClasses as PathCls
-
-
-class HealthState(Enum):
-    """ health states of patients with HIV """
-    CD4_200to500 = 0
-    CD4_200 = 1
-    AIDS = 2
-    HIV_DEATH = 3
 
 
 class Patient:
