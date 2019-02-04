@@ -95,7 +95,6 @@ class Cohort:
         :param transition_matrix: probability transition matrix
         """
         self.id = id
-        self.initialPopSize = pop_size  # initial population size
         self.patients = []  # list of patients
         self.cohortOutcomes = CohortOutcomes()  # outcomes of the this simulated cohort
 
