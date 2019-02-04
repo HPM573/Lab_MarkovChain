@@ -95,7 +95,6 @@ class Cohort:
         :param transition_matrix: probability transition matrix
         """
         self.id = id
-        self.initialPopSize = pop_size  # initial population size
         self.patients = []  # list of patients
         self.cohortOutcomes = CohortOutcomes()  # outcomes of the this simulated cohort
 
@@ -133,11 +132,8 @@ class CohortOutcomes:
         :param simulated_patients: a list of simulated patients"""
 
         # record survival time and time until AIDS
-        for patient in simulated_patients:
-            if not (patient.stateMonitor.survivalTime is None):
-                self.survivalTimes.append(patient.stateMonitor.survivalTime)
-            if patient.stateMonitor.ifDevelopedAIDS:
-                self.timesToAIDS.append(patient.stateMonitor.timeToAIDS)
+
+
 
         # calculate mean survival time
         self.meanSurvivalTime = sum(self.survivalTimes) / len(self.survivalTimes)
