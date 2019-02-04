@@ -1,4 +1,5 @@
 import numpy as np
+from enum import Enum
 
 # simulation settings
 POP_SIZE = 5000         # cohort population size
@@ -10,6 +11,14 @@ TRANS_MATRIX = [
     [0,     731,    512,    15],   # CD4_200
     [0,     0,      1312,   437]   # AIDS
     ]
+
+
+class HealthState(Enum):
+    """ health states of patients with HIV """
+    CD4_200to500 = 0
+    CD4_200 = 1
+    AIDS = 2
+    HIV_DEATH = 3
 
 
 def get_trans_prob_matrix(trans_matrix):

@@ -1,13 +1,4 @@
-from enum import Enum
 import SimPy.RandomVariantGenerators as RVGs
-
-
-class HealthState(Enum):
-    """ health states of patients with HIV """
-    CD4_200to500 = 0
-    CD4_200 = 1
-    AIDS = 2
-    HIV_DEATH = 3
 
 
 class Patient:
