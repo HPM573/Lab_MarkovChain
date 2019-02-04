@@ -1,6 +1,5 @@
 from enum import Enum
 import SimPy.RandomVariantGenerators as RVGs
-import SimPy.SamplePathClasses as PathCls
 
 
 class HealthState(Enum):
