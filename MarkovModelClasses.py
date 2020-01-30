@@ -18,12 +18,14 @@ class Patient:
         :param transition_prob_matrix: transition probability matrix
         """
         self.id = id
-        self.rng = RVGs.RNG(seed=id)  # random number generator for this patient
         self.tranProbMatrix = transition_prob_matrix  # transition probability matrix
         self.stateMonitor = PatientStateMonitor()  # patient state monitor
 
     def simulate(self, n_time_steps):
         """ simulate the patient over the specified simulation length """
+
+        # random number generator
+        rng = RVGs.RNG(seed=self.id)
 
         k = 0  # simulation time step
 
@@ -38,7 +40,7 @@ class Patient:
 
             # sample from the empirical distribution to get a new state
             # (returns an integer from {0, 1, 2, ...})
-            new_state_index = empirical_dist.sample(rng=self.rng)
+            new_state_index = empirical_dist.sample(rng=rng)
 
             # update health state
             self.stateMonitor.update(time_step=k, new_state=HealthState(new_state_index))
