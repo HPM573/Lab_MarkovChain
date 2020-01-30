@@ -1,17 +1,25 @@
 import SimPy.RandomVariantGenerators as RVGs
 import SimPy.SamplePathClasses as PathCls
-from InputData import HealthState
+from enum import Enum
+
+
+class HealthState(Enum):
+    """ health states of patients with HIV """
+    CD4_200to500 = 0
+    CD4_200 = 1
+    AIDS = 2
+    HIV_DEATH = 3
 
 
 class Patient:
-    def __init__(self, id, transition_matrix):
+    def __init__(self, id, transition_prob_matrix):
         """ initiates a patient
         :param id: ID of the patient
-        :param transition_matrix: transition probability matrix
+        :param transition_prob_matrix: transition probability matrix
         """
         self.id = id
         self.rng = RVGs.RNG(seed=id)  # random number generator for this patient
-        self.tranProbMatrix = transition_matrix  # transition probability matrix
+        self.tranProbMatrix = transition_prob_matrix  # transition probability matrix
         self.stateMonitor = PatientStateMonitor()  # patient state monitor
 
     def simulate(self, n_time_steps):
@@ -76,11 +84,11 @@ class PatientStateMonitor:
 
 
 class Cohort:
-    def __init__(self, id, pop_size, transition_matrix):
+    def __init__(self, id, pop_size, transition_prob_matrix):
         """ create a cohort of patients
         :param id: cohort ID
         :param pop_size: population size of this cohort
-        :param transition_matrix: probability transition matrix
+        :param transition_prob_matrix: transition probability matrix
         """
         self.id = id
         self.patients = []  # list of patients
@@ -89,7 +97,7 @@ class Cohort:
         # populate the cohort
         for i in range(pop_size):
             # create a new patient (use id * pop_size + n as patient id)
-            patient = Patient(id=id * pop_size + i, transition_matrix=transition_matrix)
+            patient = Patient(id=id * pop_size + i, transition_prob_matrix=transition_prob_matrix)
             # add the patient to the cohort
             self.patients.append(patient)
 
