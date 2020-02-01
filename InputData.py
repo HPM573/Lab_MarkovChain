@@ -1,9 +1,18 @@
 import numpy as np
-
+from enum import Enum
 
 # simulation settings
 POP_SIZE = 5000         # cohort population size
 SIM_TIME_STEPS = 100    # length of simulation (years)
+
+
+class HealthState(Enum):
+    """ health states of patients with HIV """
+    CD4_200to500 = 0
+    CD4_200 = 1
+    AIDS = 2
+    HIV_DEATH = 3
+
 
 # transition matrix
 TRANS_MATRIX = [
