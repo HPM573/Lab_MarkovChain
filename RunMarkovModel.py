@@ -6,7 +6,7 @@ import InputData as D
 # create a cohort
 myCohort = Cls.Cohort(id=1,
                       pop_size=D.POP_SIZE,
-                      transition_matrix=D.get_trans_prob_matrix(D.TRANS_MATRIX))
+                      transition_prob_matrix=D.get_trans_prob_matrix(D.TRANS_MATRIX))
 
 # simulate the cohort over the specified time steps
 myCohort.simulate(n_time_steps=D.SIM_TIME_STEPS)

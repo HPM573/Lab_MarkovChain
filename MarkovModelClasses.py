@@ -4,13 +4,13 @@ import SimPy.SamplePathClasses as PathCls
 
 
 class Patient:
-    def __init__(self, id, transition_matrix):
+    def __init__(self, id, transition_prob_matrix):
         """ initiates a patient
         :param id: ID of the patient
-        :param transition_matrix: transition probability matrix
+        :param transition_prob_matrix: transition probability matrix
         """
         self.id = id
-        self.tranProbMatrix = transition_matrix  # transition probability matrix
+        self.tranProbMatrix = transition_prob_matrix  # transition probability matrix
         self.stateMonitor = PatientStateMonitor()  # patient state monitor
 
     def simulate(self, n_time_steps):
@@ -76,15 +76,15 @@ class PatientStateMonitor:
 
 
 class Cohort:
-    def __init__(self, id, pop_size, transition_matrix):
+    def __init__(self, id, pop_size, transition_prob_matrix):
         """ create a cohort of patients
         :param id: cohort ID
         :param pop_size: population size of this cohort
-        :param transition_matrix: probability transition matrix
+        :param transition_prob_matrix: transition probability matrix
         """
         self.id = id
         self.popSize = pop_size
-        self.transitionMatrix = transition_matrix
+        self.transitionProbMatrix = transition_prob_matrix
         self.cohortOutcomes = CohortOutcomes()  # outcomes of the this simulated cohort
 
     def simulate(self, n_time_steps):
@@ -97,7 +97,7 @@ class Cohort:
         for i in range(self.popSize):
             # create a new patient (use id * pop_size + n as patient id)
             patient = Patient(id=self.id * self.popSize + i,
-                              transition_matrix=self.transitionMatrix)
+                              transition_prob_matrix=self.transitionProbMatrix)
             # add the patient to the cohort
             patients.append(patient)
 
