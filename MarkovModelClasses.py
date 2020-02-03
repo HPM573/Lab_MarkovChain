@@ -85,27 +85,30 @@ class Cohort:
         :param transition_prob_matrix: transition probability matrix
         """
         self.id = id
-        self.patients = []  # list of patients
+        self.popSize = pop_size
+        self.transitionProbMatrix = transition_prob_matrix
         self.cohortOutcomes = CohortOutcomes()  # outcomes of the this simulated cohort
-
-        # populate the cohort
-        for i in range(pop_size):
-            # create a new patient (use id * pop_size + n as patient id)
-            patient = Patient(id=id * pop_size + i, transition_prob_matrix=transition_prob_matrix)
-            # add the patient to the cohort
-            self.patients.append(patient)
 
     def simulate(self, n_time_steps):
         """ simulate the cohort of patients over the specified number of time-steps
         :param n_time_steps: number of time steps to simulate the cohort
         """
+        # populate the cohort
+        patients = []  # list of patients
+        for i in range(self.popSize):
+            # create a new patient (use id * pop_size + n as patient id)
+            patient = Patient(id=self.id * self.popSize + i,
+                              transition_prob_matrix=self.transitionProbMatrix)
+            # add the patient to the cohort
+            patients.append(patient)
+
         # simulate all patients
-        for patient in self.patients:
+        for patient in patients:
             # simulate
             patient.simulate(n_time_steps)
 
         # store outputs of this simulation
-        self.cohortOutcomes.extract_outcomes(self.patients)
+        self.cohortOutcomes.extract_outcomes(simulated_patients=patients)
 
 
 class CohortOutcomes:
