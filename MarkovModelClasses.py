@@ -10,13 +10,13 @@ class Patient:
         :param transition_matrix: transition probability matrix
         """
         self.id = id
-        self.rng = RVGs.RNG(seed=id)  # random number generator for this patient
         self.tranProbMatrix = transition_matrix  # transition probability matrix
         self.stateMonitor = PatientStateMonitor()  # patient state monitor
 
     def simulate(self, n_time_steps):
         """ simulate the patient over the specified simulation length """
 
+        rng = RVGs.RNG(seed=self.id)  # random number generator for this patient
         k = 0  # simulation time step
 
         # while the patient is alive and simulation length is not yet reached
@@ -30,7 +30,7 @@ class Patient:
 
             # sample from the empirical distribution to get a new state
             # (returns an integer from {0, 1, 2, ...})
-            new_state_index = empirical_dist.sample(rng=self.rng)
+            new_state_index = empirical_dist.sample(rng=rng)
 
             # update health state
             self.stateMonitor.update(time_step=k, new_state=HealthState(new_state_index))
@@ -83,27 +83,31 @@ class Cohort:
         :param transition_matrix: probability transition matrix
         """
         self.id = id
-        self.patients = []  # list of patients
+        self.popSize = pop_size
+        self.transitionMatrix = transition_matrix
         self.cohortOutcomes = CohortOutcomes()  # outcomes of the this simulated cohort
-
-        # populate the cohort
-        for i in range(pop_size):
-            # create a new patient (use id * pop_size + n as patient id)
-            patient = Patient(id=id * pop_size + i, transition_matrix=transition_matrix)
-            # add the patient to the cohort
-            self.patients.append(patient)
 
     def simulate(self, n_time_steps):
         """ simulate the cohort of patients over the specified number of time-steps
         :param n_time_steps: number of time steps to simulate the cohort
         """
+
+        # populate the cohort
+        patients = []  # list of patients
+        for i in range(self.popSize):
+            # create a new patient (use id * pop_size + n as patient id)
+            patient = Patient(id=self.id * self.popSize + i,
+                              transition_matrix=self.transitionMatrix)
+            # add the patient to the cohort
+            patients.append(patient)
+
         # simulate all patients
-        for patient in self.patients:
+        for patient in patients:
             # simulate
             patient.simulate(n_time_steps)
 
         # store outputs of this simulation
-        self.cohortOutcomes.extract_outcomes(self.patients)
+        self.cohortOutcomes.extract_outcomes(simulated_patients=patients)
 
 
 class CohortOutcomes:
