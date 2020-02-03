@@ -1,5 +1,5 @@
-from InputData import HealthState
 import SimPy.RandomVariantGenerators as RVGs
+from InputData import HealthState
 
 
 class Patient:
