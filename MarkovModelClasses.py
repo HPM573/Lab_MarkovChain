@@ -8,7 +8,6 @@ class Patient:
         :param transition_matrix: transition probability matrix
         """
         self.id = id
-        self.rng = RVGs.RNG(seed=id)  # random number generator for this patient
         self.tranProbMatrix = transition_matrix  # transition probability matrix
 
 
