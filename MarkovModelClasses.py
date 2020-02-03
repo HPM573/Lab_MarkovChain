@@ -1,6 +1,6 @@
 import SimPy.RandomVariantGenerators as RVGs
 import SimPy.SamplePathClasses as PathCls
-from InputData import *  # import everything from InputData
+from InputData import HealthState
 
 
 class Patient:
