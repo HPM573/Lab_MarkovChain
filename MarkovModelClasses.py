@@ -1,6 +1,7 @@
 from InputData import HealthState
 import SimPy.RandomVariantGenerators as RVGs
 import SimPy.SamplePathClasses as PathCls
+import SimPy.MarkovClasses as Markov
 
 
 class Patient:
@@ -10,8 +11,8 @@ class Patient:
         :param transition_prob_matrix: transition probability matrix
         """
         self.id = id
-        self.tranProbMatrix = transition_prob_matrix  # transition probability matrix
-        self.stateMonitor = PatientStateMonitor()  # patient state monitor
+        self.markovJump = Markov.MarkovJumpProcess(transition_prob_matrix=transition_prob_matrix)
+        self.stateMonitor = PatientStateMonitor()
 
     def simulate(self, n_time_steps):
         """ simulate the patient over the specified simulation length """
@@ -24,15 +25,11 @@ class Patient:
         # while the patient is alive and simulation length is not yet reached
         while self.stateMonitor.get_if_alive() and k < n_time_steps:
 
-            # find the transition probabilities to future states
-            trans_probs = self.tranProbMatrix[self.stateMonitor.currentState.value]
-
-            # create an empirical distribution
-            empirical_dist = RVGs.Empirical(probabilities=trans_probs)
-
-            # sample from the empirical distribution to get a new state
+            # sample from the Markov jump process to get a new state
             # (returns an integer from {0, 1, 2, ...})
-            new_state_index = empirical_dist.sample(rng=rng)
+            new_state_index = self.markovJump.get_next_state(
+                current_state_index=self.stateMonitor.currentState.value,
+                rng=rng)
 
             # update health state
             self.stateMonitor.update(time_step=k, new_state=HealthState(new_state_index))
