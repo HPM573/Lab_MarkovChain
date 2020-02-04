@@ -16,10 +16,10 @@ class HealthState(Enum):
 
 # transition matrix
 TRANS_MATRIX = [
-    [1251, 350, 116, 17],   # CD4_200to500
-    [0, 731, 512, 15],      # CD4_200
-    [0, 0, 1312, 437]       # AIDS
-]
+    [1251,  350,    116,    17],   # CD4_200to500
+    [0,     731,    512,    15],   # CD4_200
+    [0,     0,      1312,   437]   # AIDS
+    ]
 
 
 def get_trans_prob_matrix(trans_matrix):
