@@ -11,7 +11,7 @@ class Patient:
         :param transition_prob_matrix: transition probability matrix
         """
         self.id = id
-        self.markovJump = Markov.MarkovJumpProcess(transition_prob_matrix=transition_prob_matrix)
+        self.transProbMatrix = transition_prob_matrix
         self.stateMonitor = PatientStateMonitor()
 
     def simulate(self, n_time_steps):
@@ -19,6 +19,8 @@ class Patient:
 
         # random number generator
         rng = RVGs.RNG(seed=self.id)
+        # jump process
+        markov_jump = Markov.MarkovJumpProcess(transition_prob_matrix=self.transProbMatrix)
 
         k = 0  # simulation time step
 
@@ -27,7 +29,7 @@ class Patient:
 
             # sample from the Markov jump process to get a new state
             # (returns an integer from {0, 1, 2, ...})
-            new_state_index = self.markovJump.get_next_state(
+            new_state_index = markov_jump.get_next_state(
                 current_state_index=self.stateMonitor.currentState.value,
                 rng=rng)
 
