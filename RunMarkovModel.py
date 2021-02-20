@@ -1,12 +1,12 @@
-import MarkovModelClasses as Cls
+from MarkovModelClasses import Cohort
 import SimPy.Plots.SamplePaths as Path
 import SimPy.Plots.Histogram as Hist
 import InputData as D
 
 # create a cohort
-myCohort = Cls.Cohort(id=1,
-                      pop_size=D.POP_SIZE,
-                      transition_prob_matrix=D.get_trans_prob_matrix(D.TRANS_MATRIX))
+myCohort = Cohort(id=1,
+                  pop_size=D.POP_SIZE,
+                  transition_prob_matrix=D.get_trans_prob_matrix(D.TRANS_MATRIX))
 
 # simulate the cohort over the specified time steps
 myCohort.simulate(n_time_steps=D.SIM_TIME_STEPS)
