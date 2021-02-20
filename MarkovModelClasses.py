@@ -1,5 +1,5 @@
 import SimPy.RandomVariateGenerators as RVGs
-from InputData import HealthState
+from InputData import HealthStates
 import SimPy.Markov as Markov
 
 
@@ -32,7 +32,7 @@ class Patient:
                 rng=rng)
 
             # update health state
-            self.stateMonitor.update(time_step=k, new_state=HealthState(new_state_index))
+            self.stateMonitor.update(time_step=k, new_state=HealthStates(new_state_index))
 
             # increment time
             k += 1
@@ -42,7 +42,7 @@ class PatientStateMonitor:
     """ to update patient outcomes (years survived, cost, etc.) throughout the simulation """
     def __init__(self):
 
-        self.currentState = HealthState.CD4_200to500    # current health state
+        self.currentState = HealthStates.CD4_200to500    # current health state
         self.survivalTime = None      # survival time
         self.timeToAIDS = None        # time to develop AIDS
 
@@ -54,11 +54,11 @@ class PatientStateMonitor:
         """
 
         # update survival time
-        if new_state == HealthState.HIV_DEATH:
+        if new_state == HealthStates.HIV_DEATH:
             self.survivalTime = time_step + 0.5  # corrected for the half-cycle effect
 
         # update time until AIDS
-        if self.currentState != HealthState.AIDS and new_state == HealthState.AIDS:
+        if self.currentState != HealthStates.AIDS and new_state == HealthStates.AIDS:
             self.timeToAIDS = time_step + 0.5  # corrected for the half-cycle effect
 
         # update current health state
@@ -66,7 +66,7 @@ class PatientStateMonitor:
 
     def get_if_alive(self):
         """ returns true if the patient is still alive """
-        if self.currentState != HealthState.HIV_DEATH:
+        if self.currentState != HealthStates.HIV_DEATH:
             return True
         else:
             return False
