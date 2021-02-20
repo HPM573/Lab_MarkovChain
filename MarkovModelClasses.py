@@ -1,6 +1,6 @@
-import SimPy.RandomVariantGenerators as RVGs
+import SimPy.RandomVariateGenerators as RVGs
 from InputData import HealthState
-import SimPy.MarkovClasses as Markov
+import SimPy.Markov as Markov
 
 
 class Patient:
@@ -45,7 +45,6 @@ class PatientStateMonitor:
         self.currentState = HealthState.CD4_200to500    # current health state
         self.survivalTime = None      # survival time
         self.timeToAIDS = None        # time to develop AIDS
-        self.ifDevelopedAIDS = False  # if the patient developed AIDS
 
     def update(self, time_step, new_state):
         """
@@ -60,7 +59,6 @@ class PatientStateMonitor:
 
         # update time until AIDS
         if self.currentState != HealthState.AIDS and new_state == HealthState.AIDS:
-            self.ifDevelopedAIDS = True
             self.timeToAIDS = time_step + 0.5  # corrected for the half-cycle effect
 
         # update current health state
