@@ -6,7 +6,7 @@ POP_SIZE = 5000         # cohort population size
 SIM_TIME_STEPS = 100    # length of simulation (years)
 
 
-class HealthState(Enum):
+class HealthStates(Enum):
     """ health states of patients with HIV """
     CD4_200to500 = 0
     CD4_200 = 1
