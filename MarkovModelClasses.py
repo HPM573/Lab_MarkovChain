@@ -47,7 +47,6 @@ class PatientStateMonitor:
         self.currentState = HealthStates.CD4_200to500    # current health state
         self.survivalTime = None      # survival time
         self.timeToAIDS = None        # time to develop AIDS
-        self.ifDevelopedAIDS = False  # if the patient developed AIDS
 
     def update(self, time_step, new_state):
         """
@@ -62,7 +61,6 @@ class PatientStateMonitor:
 
         # update time until AIDS
         if self.currentState != HealthStates.AIDS and new_state == HealthStates.AIDS:
-            self.ifDevelopedAIDS = True
             self.timeToAIDS = time_step + 0.5  # corrected for the half-cycle effect
 
         # update current health state
@@ -127,7 +125,7 @@ class CohortOutcomes:
         for patient in simulated_patients:
             if patient.stateMonitor.survivalTime is not None:
                 self.survivalTimes.append(patient.stateMonitor.survivalTime)
-            if patient.stateMonitor.ifDevelopedAIDS:
+            if patient.stateMonitor.timeToAIDS is not None:
                 self.timesToAIDS.append(patient.stateMonitor.timeToAIDS)
 
         # calculate mean survival time
