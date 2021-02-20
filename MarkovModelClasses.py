@@ -1,4 +1,3 @@
-import SimPy.RandomVariantGenerators as RVGs
 
 
 class Patient:
