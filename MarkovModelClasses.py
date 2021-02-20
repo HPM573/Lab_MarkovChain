@@ -1,7 +1,7 @@
 from InputData import HealthStates
-import SimPy.RandomVariantGenerators as RVGs
-import SimPy.SamplePathClasses as PathCls
-import SimPy.MarkovClasses as Markov
+import SimPy.RandomVariateGenerators as RVGs
+import SimPy.Plots.SamplePaths as Path
+import SimPy.Markov as Markov
 
 
 class Patient:
@@ -136,7 +136,7 @@ class CohortOutcomes:
         self.meanTimeToAIDS = sum(self.timesToAIDS)/len(self.timesToAIDS)
 
         # survival curve
-        self.nLivingPatients = PathCls.PrevalencePathBatchUpdate(
+        self.nLivingPatients = Path.PrevalencePathBatchUpdate(
             name='# of living patients',
             initial_size=len(simulated_patients),
             times_of_changes=self.survivalTimes,
