@@ -1,6 +1,7 @@
-import SimPy.RandomVariateGenerators as RVGs
-from InputData import HealthStates
+import numpy as np
+
 import SimPy.Markov as Markov
+from InputData import HealthStates
 
 
 class Patient:
@@ -17,7 +18,7 @@ class Patient:
         """ simulate the patient over the specified simulation length """
 
         # random number generator
-        rng = RVGs.RNG(seed=self.id)
+        rng = np.random.RandomState(seed=self.id)
         # Markov jump process
         markov_jump = Markov.MarkovJumpProcess(transition_prob_matrix=self.transProbMatrix)
 

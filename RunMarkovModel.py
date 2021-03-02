@@ -1,5 +1,5 @@
-import MarkovModelClasses as Cls
 import InputData as D
+import MarkovModelClasses as Cls
 
 # create a patient
 myPatient = Cls.Patient(id=1,
