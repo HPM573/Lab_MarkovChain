@@ -1,7 +1,7 @@
-from InputData import HealthStates
-import SimPy.RandomVariateGenerators as RVGs
-import SimPy.Plots.SamplePaths as Path
 import SimPy.Markov as Markov
+import SimPy.Plots.SamplePaths as Path
+import SimPy.RandomVariateGenerators as RVGs
+from InputData import HealthStates
 
 
 class Patient:

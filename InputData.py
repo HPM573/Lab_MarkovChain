@@ -1,5 +1,6 @@
-import numpy as np
 from enum import Enum
+
+import numpy as np
 
 # simulation settings
 POP_SIZE = 5000         # cohort population size
