@@ -1,9 +1,9 @@
-import MarkovModelClasses as Cls
+from MarkovModelClasses import Patient
 import InputData as D
 
 # create a patient
-myPatient = Cls.Patient(id=1,
-                        transition_prob_matrix=D.get_trans_prob_matrix(D.TRANS_MATRIX))
+myPatient = Patient(id=1,
+                    transition_prob_matrix=D.get_trans_prob_matrix(D.TRANS_MATRIX))
 
 # simulate the patient over the specified time steps
 myPatient.simulate(n_time_steps=D.SIM_TIME_STEPS)
