@@ -93,49 +93,51 @@ class Cohort:
         """
 
         # populate the cohort
-        patients = []  # list of patients
         for i in range(self.popSize):
             # create a new patient (use id * pop_size + n as patient id)
             patient = Patient(id=self.id * self.popSize + i,
                               transition_prob_matrix=self.transitionProbMatrix)
-            # add the patient to the cohort
-            patients.append(patient)
-
-        # simulate all patients
-        for patient in patients:
             # simulate
             patient.simulate(n_time_steps)
 
-        # store outputs of this simulation
-        self.cohortOutcomes.extract_outcomes(simulated_patients=patients)
+            # store outputs of this simulation
+            self.cohortOutcomes.extract_outcome(simulated_patient=patient)
+
+        # calculate cohort outcomes
+        self.cohortOutcomes.calculate_cohort_outcomes(initial_pop_size=self.popSize)
 
 
 class CohortOutcomes:
     def __init__(self):
 
-        self.survivalTimes = []         # patients' survival times
-        self.timesToAIDS = []           # patients' times to AIDS
-        self.meanSurvivalTime = None    # mean survival times
-        self.meanTimeToAIDS = None      # mean time to AIDS
-        self.nLivingPatients = None     # survival curve (sample path of number of alive patients over time)
+        self.survivalTimes = []  # patients' survival times
+        self.timesToAIDS = []  # patients' times to AIDS
+        self.meanSurvivalTime = None  # mean survival times
+        self.meanTimeToAIDS = None  # mean time to AIDS
+        self.nLivingPatients = None  # survival curve (sample path of number of alive patients over time)
 
-    def extract_outcomes(self, simulated_patients):
-        """ extracts outcomes of a simulated cohort
-        :param simulated_patients: a list of simulated patients"""
+    def extract_outcome(self, simulated_patient):
+        """ extracts outcomes of a simulated patient
+        :param simulated_patient: a simulated patient"""
 
         # record survival time and time until AIDS
 
 
+    def calculate_cohort_outcomes(self, initial_pop_size):
+        """ calculates the cohort outcomes
+        :param initial_pop_size: initial population size
+        """
 
         # calculate mean survival time
         self.meanSurvivalTime = sum(self.survivalTimes) / len(self.survivalTimes)
         # calculate mean time to AIDS
-        self.meanTimeToAIDS = sum(self.timesToAIDS)/len(self.timesToAIDS)
+        self.meanTimeToAIDS = sum(self.timesToAIDS) / len(self.timesToAIDS)
 
         # survival curve
         self.nLivingPatients = Path.PrevalencePathBatchUpdate(
             name='# of living patients',
-            initial_size=len(simulated_patients),
+            initial_size=initial_pop_size,
             times_of_changes=self.survivalTimes,
-            increments=[-1]*len(self.survivalTimes)
+            increments=[-1] * len(self.survivalTimes)
         )
+
