@@ -91,7 +91,7 @@ class Cohort:
         """ simulate the cohort of patients over the specified number of time-steps
         :param n_time_steps: number of time steps to simulate the cohort
         """
-        # populate the cohort
+        # populate and simulate the cohort
         for i in range(self.popSize):
             # create a new patient (use id * pop_size + n as patient id)
             patient = Patient(id=self.id * self.popSize + i,
