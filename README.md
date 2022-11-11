@@ -1,1 +1,1 @@
-# Lab: Markov Model (Discrete-Time)
+# Lab: Markov Chain
