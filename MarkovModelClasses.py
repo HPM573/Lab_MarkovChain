@@ -85,7 +85,7 @@ class Cohort:
         self.id = id
         self.popSize = pop_size
         self.transitionProbMatrix = transition_prob_matrix
-        self.cohortOutcomes = CohortOutcomes()  # outcomes of the this simulated cohort
+        self.cohortOutcomes = CohortOutcomes()  # outcomes of this simulated cohort
 
     def simulate(self, n_time_steps):
         """ simulate the cohort of patients over the specified number of time-steps
