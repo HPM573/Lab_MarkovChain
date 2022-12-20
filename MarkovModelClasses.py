@@ -1,6 +1,6 @@
 import numpy as np
 
-from InputData import HealthStates
+from MarkovInputData import HealthStates
 from deampy.markov import MarkovJumpProcess
 from deampy.plots.sample_paths import PrevalencePathBatchUpdate
 
