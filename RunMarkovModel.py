@@ -1,6 +1,7 @@
-import InputData as D
-import SimPy.Plots.Histogram as Hist
-import SimPy.Plots.SamplePaths as Path
+import deampy.plots.histogram as hist
+import deampy.plots.sample_paths as path
+
+import MarkovInputData as D
 from MarkovModelClasses import Cohort
 
 # create a cohort
@@ -12,19 +13,21 @@ myCohort = Cohort(id=1,
 myCohort.simulate(n_time_steps=D.SIM_TIME_STEPS)
 
 # plot the sample path (survival curve)
-Path.plot_sample_path(
+path.plot_sample_path(
     sample_path=myCohort.cohortOutcomes.nLivingPatients,
     title='Survival Curve',
-    x_label='Time-Step (Year)',
-    y_label='Number Survived')
+    x_label='Simulation Year',
+    y_label='Number Alive',
+    file_name='figs/survival_curve.png')
 
 # plot the histogram of survival times
-Hist.plot_histogram(
+hist.plot_histogram(
     data=myCohort.cohortOutcomes.survivalTimes,
     title='Histogram of Patient Survival Time',
     x_label='Survival Time (Year)',
     y_label='Count',
-    bin_width=1)
+    bin_width=1,
+    file_name='figs/histogram.png')
 
 # print the patient survival time
 print('Mean survival time (years):',
