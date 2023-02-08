@@ -1,5 +1,5 @@
+import MarkovInputData as D
 from MarkovModelClasses import Patient
-import InputData as D
 
 # create a patient
 myPatient = Patient(id=1,
