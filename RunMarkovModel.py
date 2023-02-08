@@ -1,4 +1,4 @@
-import InputData as D
+import MarkovInputData as D
 from MarkovModelClasses import Patient
 
 # create a patient

@@ -1,7 +1,7 @@
 import numpy as np
+from deampy.markov import MarkovJumpProcess
 
-import SimPy.Markov as Markov
-from InputData import HealthStates
+from MarkovInputData import HealthStates
 
 
 class Patient:
@@ -20,7 +20,7 @@ class Patient:
         # random number generator
         rng = np.random.RandomState(seed=self.id)
         # Markov jump process
-        markov_jump = Markov.MarkovJumpProcess(transition_prob_matrix=self.transProbMatrix)
+        markov_jump = MarkovJumpProcess(transition_prob_matrix=self.transProbMatrix)
 
         k = 0  # simulation time step
 
