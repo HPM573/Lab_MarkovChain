@@ -58,8 +58,9 @@ class PatientStateMonitor:
         if new_state == HealthStates.HIV_DEATH:
             self.survivalTime = time_step + 0.5  # corrected for the half-cycle effect
 
-        # update time until AIDS
-        if self.currentState != HealthStates.AIDS and new_state == HealthStates.AIDS:
+        # update time until AIDS (only if the patient has never developed AIDS before)
+        if self.timeToAIDS is None \
+                and (self.currentState != HealthStates.AIDS and new_state == HealthStates.AIDS):
             self.timeToAIDS = time_step + 0.5  # corrected for the half-cycle effect
 
         # update current health state
