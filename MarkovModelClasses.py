@@ -20,7 +20,7 @@ class Patient:
 
         # random number generator
         rng = np.random.RandomState(seed=self.id)
-        # jump process
+        # Markov jump process
         markov_jump = MarkovJumpProcess(transition_prob_matrix=self.transProbMatrix)
 
         k = 0  # simulation time step
