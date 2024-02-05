@@ -133,7 +133,7 @@ class CohortOutcomes:
         # calculate mean survival time
         self.meanSurvivalTime = sum(self.survivalTimes) / len(self.survivalTimes)
         # calculate mean time to AIDS
-        self.meanTimeToAIDS = sum(self.timesToAIDS)/len(self.timesToAIDS)
+        self.meanTimeToAIDS = sum(self.timesToAIDS) / len(self.timesToAIDS)
 
         # survival curve
         self.nLivingPatients = PrevalencePathBatchUpdate(
