@@ -39,4 +39,6 @@ def get_trans_prob_matrix(trans_matrix):
         # add this row of transition probabilities to the transition probability matrix
         trans_prob_matrix.append(prob_row)
 
+    # add a row for the Death state
+    trans_prob_matrix.append([0, 0, 0, 1])
     return trans_prob_matrix

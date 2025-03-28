@@ -1,8 +1,8 @@
 import numpy as np
-from deampy.markov import MarkovJumpProcess
-from deampy.plots.sample_paths import PrevalencePathBatchUpdate
 
 from MarkovInputData import HealthStates
+from deampy.markov import MarkovJumpProcess
+from deampy.plots.sample_paths import PrevalencePathBatchUpdate
 
 
 class Patient:
@@ -21,7 +21,9 @@ class Patient:
         # random number generator
         rng = np.random.RandomState(seed=self.id)
         # Markov jump process
-        markov_jump = MarkovJumpProcess(transition_prob_matrix=self.transProbMatrix)
+        markov_jump = MarkovJumpProcess(
+            transition_prob_matrix=self.transProbMatrix,
+            state_descriptions=HealthStates)
 
         k = 0  # simulation time step
 
@@ -29,13 +31,12 @@ class Patient:
         while self.stateMonitor.get_if_alive() and k < n_time_steps:
 
             # sample from the Markov jump process to get a new state
-            # (returns an integer from {0, 1, 2, ...})
-            new_state_index = markov_jump.get_next_state(
-                current_state_index=self.stateMonitor.currentState.value,
+            new_state = markov_jump.get_next_state(
+                current_state=self.stateMonitor.currentState,
                 rng=rng)
 
             # update health state
-            self.stateMonitor.update(time_step=k, new_state=HealthStates(new_state_index))
+            self.stateMonitor.update(time_step=k, new_state=new_state)
 
             # increment time
             k += 1
